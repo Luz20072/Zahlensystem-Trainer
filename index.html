@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Zahlensystem-Trainer</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="container">
+
+        <header>
+            <h1>Zahlensystem-Trainer</h1>
+
+            <p>
+                Übe die Umrechnung zwischen Binär-, Dezimal-
+                und Hexadezimalzahlen.
+            </p>
+        </header>
+
+
+        <!-- ==========================================
+             MODUSAUSWAHL
+             ========================================== -->
+
+        <section id="menu">
+
+            <h2>Übungsmodus</h2>
+
+            <div class="mode-grid">
+
+                <button class="mode-button" data-mode="decimal-binary">
+                    Dezimal → Binär
+                </button>
+
+                <button class="mode-button" data-mode="binary-decimal">
+                    Binär → Dezimal
+                </button>
+
+                <button class="mode-button" data-mode="decimal-hex">
+                    Dezimal → Hexadezimal
+                </button>
+
+                <button class="mode-button" data-mode="hex-decimal">
+                    Hexadezimal → Dezimal
+                </button>
+
+                <button class="mode-button" data-mode="binary-hex">
+                    Binär → Hexadezimal
+                </button>
+
+                <button class="mode-button" data-mode="hex-binary">
+                    Hexadezimal → Binär
+                </button>
+
+                <button class="mode-button mixed" data-mode="mixed">
+                    Gemischte Aufgaben
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==========================================
+             TRAINING
+             ========================================== -->
+
+        <section id="training" class="hidden">
+
+            <div class="top-bar">
+
+                <button id="backButton">
+                    ← Zurück
+                </button>
+
+                <span id="score">
+                    Aufgabe 1 / 10 | Richtig: 0
+                </span>
+
+            </div>
+
+
+            <div class="task-card">
+
+                <span id="taskType">
+                    Dezimal → Binär
+                </span>
+
+
+                <h2 id="task">
+                    123₁₀ → ?
+                </h2>
+
+
+                <div class="answer-area">
+
+                    <input type="text" id="answerInput" autocomplete="off" spellcheck="false"
+                        placeholder="Deine Antwort">
+
+                    <button id="checkButton">
+                        Prüfen
+                    </button>
+
+                </div>
+
+
+                <div id="feedback"></div>
+
+
+                <button id="solutionButton" class="hidden">
+                    Lösungsweg anzeigen
+                </button>
+
+
+                <div id="solution" class="solution hidden"></div>
+
+
+                <button id="nextButton" class="hidden">
+                    Nächste Aufgabe
+                </button>
+
+
+                <!-- ======================================
+                     ERGEBNIS-BUTTONS
+                     ====================================== -->
+
+                <div id="resultButtons" class="hidden">
+
+                    <button id="restartButton">
+                        Nochmal 10 Aufgaben
+                    </button>
+
+                    <button id="menuButton">
+                        Anderen Übungsmodus wählen
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

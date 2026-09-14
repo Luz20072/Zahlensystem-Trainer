@@ -1,0 +1,333 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-family: Arial, sans-serif;
+
+    background: #f1f3f5;
+    color: #222;
+}
+
+
+.container {
+    width: min(700px, 92%);
+
+    background: white;
+
+    padding: 35px;
+
+    border-radius: 14px;
+
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+}
+
+
+header {
+    text-align: center;
+
+    margin-bottom: 35px;
+}
+
+
+h1 {
+    margin-bottom: 10px;
+}
+
+
+header p {
+    margin: 0;
+
+    color: #666;
+}
+
+
+h2 {
+    text-align: center;
+}
+
+
+/* ==========================================
+   MODUS
+   ========================================== */
+
+.mode-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 12px;
+
+    margin-top: 25px;
+}
+
+
+button {
+    border: none;
+
+    padding: 13px 18px;
+
+    border-radius: 8px;
+
+    background: #2563eb;
+
+    color: white;
+
+    font-size: 15px;
+
+    cursor: pointer;
+
+    transition: 0.15s;
+}
+
+
+button:hover {
+    background: #1d4ed8;
+}
+
+
+.mode-button {
+    min-height: 55px;
+}
+
+
+.mode-button.mixed {
+    grid-column: 1 / -1;
+
+    background: #7c3aed;
+}
+
+
+.mode-button.mixed:hover {
+    background: #6d28d9;
+}
+
+
+/* ==========================================
+   TRAINING
+   ========================================== */
+
+.hidden {
+    display: none !important;
+}
+
+
+.top-bar {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 25px;
+}
+
+
+#backButton {
+    background: #6b7280;
+}
+
+
+#score {
+    font-weight: bold;
+}
+
+
+.task-card {
+    text-align: center;
+
+    padding: 30px;
+
+    border: 1px solid #ddd;
+
+    border-radius: 12px;
+}
+
+
+#taskType {
+    color: #666;
+
+    font-size: 14px;
+}
+
+
+#task {
+    font-family: monospace;
+
+    font-size: 32px;
+
+    margin: 25px 0;
+}
+
+
+.answer-area {
+    display: flex;
+
+    gap: 10px;
+
+    justify-content: center;
+}
+
+
+#answerInput {
+    width: 250px;
+
+    padding: 13px;
+
+    border: 1px solid #bbb;
+
+    border-radius: 8px;
+
+    font-family: monospace;
+
+    font-size: 18px;
+
+    outline: none;
+}
+
+
+#answerInput:focus {
+    border-color: #2563eb;
+}
+
+
+#feedback {
+    margin-top: 20px;
+
+    font-size: 18px;
+
+    font-weight: bold;
+}
+
+
+#solutionButton {
+    margin-top: 15px;
+
+    background: #f59e0b;
+}
+
+
+#solutionButton:hover {
+    background: #d97706;
+}
+
+
+.solution {
+    margin-top: 20px;
+
+    padding: 20px;
+
+    text-align: left;
+
+    background: #f8f9fa;
+
+    border-radius: 8px;
+
+    border: 1px solid #ddd;
+
+    font-family: monospace;
+
+    white-space: pre-line;
+
+    line-height: 1.6;
+}
+
+
+#nextButton {
+    margin-top: 20px;
+
+    background: #16a34a;
+}
+
+
+#nextButton:hover {
+    background: #15803d;
+}
+
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
+
+@media (max-width: 600px) {
+
+    .container {
+        padding: 22px;
+    }
+
+
+    .mode-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .mode-button.mixed {
+        grid-column: auto;
+    }
+
+
+    .answer-area {
+        flex-direction: column;
+    }
+
+
+    #answerInput {
+        width: 100%;
+    }
+
+
+    #task {
+        font-size: 25px;
+    }
+
+}
+
+/* ==========================================
+   ERGEBNIS-BUTTONS
+   ========================================== */
+
+#resultButtons {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    margin-top: 25px;
+}
+
+
+#resultButtons button {
+    background: #2563eb;
+}
+
+
+#resultButtons button:hover {
+    background: #1d4ed8;
+}
+
+
+#menuButton {
+    background: #6b7280 !important;
+}
+
+
+#menuButton:hover {
+    background: #4b5563 !important;
+}
+
+
+@media (max-width: 600px) {
+
+    #resultButtons {
+        flex-direction: column;
+    }
+
+}
