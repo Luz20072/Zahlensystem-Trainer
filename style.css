@@ -1,333 +1,1269 @@
+:root {
+    --blue: #3b82f6;
+    --blue-dark: #2563eb;
+    --blue-light: #172554;
+
+    --cyan: #06b6d4;
+    --cyan-dark: #0891b2;
+    --cyan-light: #083344;
+
+    --purple: #8b5cf6;
+    --purple-dark: #7c3aed;
+    --purple-light: #2e1065;
+
+    --green: #22c55e;
+    --green-dark: #16a34a;
+
+    --orange: #f59e0b;
+    --orange-dark: #d97706;
+
+    --gray: #94a3b8;
+    --gray-dark: #cbd5e1;
+
+    --background: #111827;
+    --card: #1a2232;
+    --light: #202a3a;
+    --border: #334155;
+
+    --text: #f1f5f9;
+    --muted: #94a3b8;
+
+    --radius: 16px;
+
+    --shadow:
+        0 18px 45px rgba(0, 0, 0, .28),
+        0 3px 10px rgba(0, 0, 0, .18);
+
+    --transition: .18s ease;
+}
+
+
+/* =========================
+   BASIS
+========================= */
+
 * {
     box-sizing: border-box;
 }
 
 body {
     margin: 0;
-
     min-height: 100vh;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
 
-    font-family: Arial, sans-serif;
-
-    background: #f1f3f5;
-    color: #222;
+    background: var(--background);
+    color: var(--text);
 }
 
 
+/* =========================
+   CONTAINER
+========================= */
+
 .container {
-    width: min(700px, 92%);
+    width: min(1100px, calc(100% - 40px));
 
-    background: white;
+    margin: 0 auto;
 
-    padding: 35px;
+    padding: 90px 0 70px;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.header {
+    display: flex;
+    align-items: center;
+
+    gap: 18px;
+
+    margin-bottom: 56px;
+}
+
+.header-icon {
+    width: 52px;
+    height: 52px;
+
+    flex: 0 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     border-radius: 14px;
 
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    background:
+        linear-gradient(135deg,
+            var(--blue),
+            var(--purple));
+
+    box-shadow:
+        0 8px 20px rgba(59, 130, 246, .2);
 }
 
+.header-icon .material-symbols-outlined {
+    font-size: 31px;
+    line-height: 1;
 
-header {
-    text-align: center;
+    color: white;
 
-    margin-bottom: 35px;
+    font-variation-settings:
+        "FILL" 1,
+        "wght" 500,
+        "GRAD" 0,
+        "opsz" 32;
 }
 
+.header h1 {
+    margin: 0 0 6px;
 
-h1 {
-    margin-bottom: 10px;
+    font-size:
+        clamp(1.8rem,
+            3vw,
+            2.35rem);
+
+    line-height: 1.1;
+
+    letter-spacing: -.035em;
 }
 
-
-header p {
+.header p {
     margin: 0;
 
-    color: #666;
+    color: var(--muted);
+
+    font-size: .98rem;
+    line-height: 1.55;
 }
 
 
-h2 {
-    text-align: center;
+/* =========================
+   SECTION HEADING
+========================= */
+
+.section-heading {
+    margin-bottom: 24px;
+}
+
+.section-label {
+    display: inline-block;
+
+    margin-bottom: 8px;
+
+    color: var(--blue);
+
+    font-size: .72rem;
+    font-weight: 800;
+
+    letter-spacing: .12em;
+}
+
+.section-heading h2 {
+    margin: 0 0 7px;
+
+    color: var(--text);
+
+    font-size: 1.45rem;
+
+    letter-spacing: -.025em;
+}
+
+.section-heading p {
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: .92rem;
 }
 
 
-/* ==========================================
-   MODUS
-   ========================================== */
+/* =========================
+   MODE GRID
+========================= */
 
 .mode-grid {
     display: grid;
 
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns:
+        repeat(2,
+            minmax(0, 1fr));
 
-    gap: 12px;
-
-    margin-top: 25px;
+    gap: 14px;
 }
 
 
-button {
-    border: none;
+/* =========================
+   MODE BUTTON
+========================= */
 
-    padding: 13px 18px;
+.mode-button {
+    position: relative;
 
-    border-radius: 8px;
+    min-height: 92px;
 
-    background: #2563eb;
+    padding: 19px 21px;
 
-    color: white;
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--blue);
 
-    font-size: 15px;
+    border-radius: var(--radius);
+
+    background: #172033;
+
+    color: var(--text);
+
+    text-align: left;
 
     cursor: pointer;
 
-    transition: 0.15s;
+    transition:
+        transform var(--transition),
+        box-shadow var(--transition),
+        border-color var(--transition),
+        background var(--transition);
+}
+
+.mode-button:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 12px 28px rgba(0, 0, 0, .2);
+}
+
+.mode-button:active {
+    transform: translateY(0);
 }
 
 
-button:hover {
-    background: #1d4ed8;
+/* =========================
+   MODE COLORS
+========================= */
+
+.mode-button[data-mode="decimal-binary"],
+.mode-button[data-mode="binary-decimal"] {
+    border-left-color: var(--blue);
+
+    background: #172033;
+}
+
+.mode-button[data-mode="decimal-binary"]:hover,
+.mode-button[data-mode="binary-decimal"]:hover {
+    background: #1d2b45;
+
+    border-color: #315b9e;
 }
 
 
-.mode-button {
-    min-height: 55px;
+.mode-button[data-mode="decimal-hex"],
+.mode-button[data-mode="hex-decimal"],
+.mode-addition {
+    border-left-color: var(--cyan);
+
+    background: #14272f;
+}
+
+.mode-button[data-mode="decimal-hex"]:hover,
+.mode-button[data-mode="hex-decimal"]:hover,
+.mode-addition:hover {
+    background: #173843;
+
+    border-color: #216477;
 }
 
 
-.mode-button.mixed {
-    grid-column: 1 / -1;
+.mode-button[data-mode="binary-hex"],
+.mode-button[data-mode="hex-binary"],
+.mode-mixed {
+    border-left-color: var(--purple);
 
-    background: #7c3aed;
+    background: #211b32;
+}
+
+.mode-button[data-mode="binary-hex"]:hover,
+.mode-button[data-mode="hex-binary"]:hover,
+.mode-mixed:hover {
+    background: #2a2142;
+
+    border-color: #6547a4;
 }
 
 
-.mode-button.mixed:hover {
-    background: #6d28d9;
+/* =========================
+   MODE TEXT
+========================= */
+
+.mode-main {
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    color: var(--text);
+
+    font-size: 1rem;
+    font-weight: 750;
+
+    line-height: 1.35;
+}
+
+.mode-system {
+    white-space: nowrap;
 }
 
 
-/* ==========================================
+/* =========================
+   ARROW
+========================= */
+
+.mode-arrow {
+    width: 25px;
+    height: 25px;
+
+    flex: 0 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 7px;
+
+    background:
+        rgba(148,
+            163,
+            184,
+            .1);
+
+    color: #94a3b8;
+
+    font-family:
+        Inter,
+        system-ui,
+        sans-serif;
+
+    font-size: 1rem;
+    font-weight: 500;
+
+    line-height: 1;
+}
+
+
+.mode-button[data-mode="decimal-binary"] .mode-arrow,
+.mode-button[data-mode="binary-decimal"] .mode-arrow {
+    background:
+        rgba(59,
+            130,
+            246,
+            .13);
+
+    color: #60a5fa;
+}
+
+
+.mode-button[data-mode="decimal-hex"] .mode-arrow,
+.mode-button[data-mode="hex-decimal"] .mode-arrow {
+    background:
+        rgba(6,
+            182,
+            212,
+            .13);
+
+    color: #67e8f9;
+}
+
+
+.mode-button[data-mode="binary-hex"] .mode-arrow,
+.mode-button[data-mode="hex-binary"] .mode-arrow {
+    background:
+        rgba(139,
+            92,
+            246,
+            .13);
+
+    color: #c4b5fd;
+}
+
+
+/* =========================
+   MODE DESCRIPTION
+========================= */
+
+.mode-description {
+    display: block;
+
+    margin-top: 6px;
+
+    color: var(--muted);
+
+    font-size: .78rem;
+
+    line-height: 1.35;
+}
+
+
+/* =========================
+   ADDITION / MIXED ICON
+========================= */
+
+.mode-content {
+    display: block;
+}
+
+.mode-icon {
+    position: absolute;
+
+    top: 50%;
+    right: 20px;
+
+    transform: translateY(-50%);
+
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 9px;
+
+    background:
+        rgba(6,
+            182,
+            212,
+            .12);
+
+    color: #67e8f9;
+}
+
+.mode-icon .material-symbols-outlined {
+    font-size: 20px;
+
+    line-height: 1;
+
+    font-variation-settings:
+        "FILL" 0,
+        "wght" 550,
+        "GRAD" 0,
+        "opsz" 24;
+}
+
+.mode-mixed .mode-icon {
+    background:
+        rgba(139,
+            92,
+            246,
+            .13);
+
+    color: #c4b5fd;
+}
+
+.mode-addition .mode-content,
+.mode-mixed .mode-content {
+    padding-right: 48px;
+}
+
+
+/* =========================
    TRAINING
-   ========================================== */
+========================= */
 
-.hidden {
-    display: none !important;
+#training {
+    width: 100%;
 }
 
+
+/* =========================
+   TOP BAR
+========================= */
 
 .top-bar {
     display: flex;
-
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
 
-    margin-bottom: 25px;
+    gap: 20px;
+
+    margin-bottom: 18px;
 }
-
-
-#backButton {
-    background: #6b7280;
-}
-
 
 #score {
-    font-weight: bold;
+    color: var(--muted);
+
+    font-size: .9rem;
+    font-weight: 650;
 }
 
+.score-divider {
+    margin: 0 7px;
+
+    color: #475569;
+}
+
+
+/* =========================
+   SECONDARY BUTTON
+========================= */
+
+.secondary-button {
+    border: 1px solid var(--border);
+
+    background: #1a2232;
+
+    color: var(--gray-dark);
+
+    border-radius: 10px;
+
+    padding: 9px 13px;
+
+    font-size: .86rem;
+    font-weight: 650;
+
+    cursor: pointer;
+
+    transition:
+        background var(--transition),
+        border-color var(--transition),
+        color var(--transition);
+}
+
+.secondary-button:hover {
+    background: #263247;
+
+    border-color: #475569;
+
+    color: var(--text);
+}
+
+
+/* =========================
+   TASK CARD
+========================= */
 
 .task-card {
-    text-align: center;
+    padding: 34px;
 
-    padding: 30px;
+    border: 1px solid var(--border);
 
-    border: 1px solid #ddd;
+    border-radius: 20px;
 
-    border-radius: 12px;
+    background: var(--card);
+
+    box-shadow: var(--shadow);
 }
 
+
+/* =========================
+   TASK HEADER
+========================= */
+
+.task-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-bottom: 28px;
+}
 
 #taskType {
-    color: #666;
+    color: #60a5fa;
 
-    font-size: 14px;
+    font-size: .8rem;
+    font-weight: 800;
+
+    letter-spacing: .04em;
+
+    text-transform: uppercase;
 }
 
+.task-number {
+    color: var(--muted);
+
+    font-size: .78rem;
+    font-weight: 650;
+}
+
+
+/* =========================
+   TASK
+========================= */
 
 #task {
-    font-family: monospace;
+    min-height: 150px;
 
-    font-size: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    margin: 25px 0;
+    margin-bottom: 30px;
+
+    color: var(--text);
+
+    text-align: center;
 }
 
+
+/* =========================
+   CONVERSION TASK
+========================= */
+
+.conversion-task {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 22px;
+}
+
+
+/* =========================
+   NUMBER BOX
+========================= */
+
+.number-box {
+    width: min(270px, 38%);
+
+    min-height: 125px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 18px 20px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 16px;
+
+    background: #151e2e;
+
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, .14);
+
+    transition:
+        border-color var(--transition),
+        background var(--transition),
+        transform var(--transition);
+}
+
+
+/* Ausgangszahl */
+
+.source-box {
+    border-color: #315b9e;
+
+    background:
+        linear-gradient(145deg,
+            #18243a,
+            #151e2e);
+}
+
+
+/* Ziel */
+
+.target-box {
+    border-color: #475569;
+
+    background:
+        linear-gradient(145deg,
+            #1b2434,
+            #151e2e);
+}
+
+
+/* =========================
+   NUMBER BOX LABEL
+========================= */
+
+.number-box-label {
+    margin-bottom: 12px;
+
+    color: var(--muted);
+
+    font-size: .72rem;
+    font-weight: 800;
+
+    letter-spacing: .1em;
+
+    text-transform: uppercase;
+}
+
+
+/* =========================
+   NUMBER VALUE
+========================= */
+
+.number-box-value {
+    color: var(--text);
+
+    font-family:
+        "SFMono-Regular",
+        Consolas,
+        "Liberation Mono",
+        monospace;
+
+    font-size:
+        clamp(1.8rem,
+            4vw,
+            2.5rem);
+
+    font-weight: 750;
+
+    line-height: 1;
+}
+
+
+/* =========================
+   QUESTION
+========================= */
+
+.number-box-value.question {
+    color: #60a5fa;
+}
+
+
+/* =========================
+   BASE
+========================= */
+
+.base {
+    display: inline-block;
+
+    margin-left: 1px;
+
+    font-size: .62em;
+    font-weight: 800;
+
+    line-height: 1;
+
+    position: relative;
+
+    top: .25em;
+}
+
+
+/* =========================
+   CONVERSION ARROW
+========================= */
+
+.conversion-arrow {
+    width: 38px;
+    height: 38px;
+
+    flex: 0 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid var(--border);
+
+    border-radius: 10px;
+
+    background: #202a3a;
+
+    color: #94a3b8;
+
+    font-size: 1.3rem;
+    font-weight: 500;
+
+    box-shadow:
+        0 5px 14px rgba(0, 0, 0, .12);
+}
+
+
+/* =========================
+   ANSWER
+========================= */
 
 .answer-area {
     display: flex;
 
     gap: 10px;
 
-    justify-content: center;
-}
+    max-width: 620px;
 
+    margin: 0 auto;
+}
 
 #answerInput {
-    width: 250px;
+    flex: 1;
 
-    padding: 13px;
+    min-width: 0;
 
-    border: 1px solid #bbb;
+    padding: 13px 15px;
 
-    border-radius: 8px;
+    border: 1px solid #475569;
 
-    font-family: monospace;
-
-    font-size: 18px;
+    border-radius: 11px;
 
     outline: none;
+
+    background: #111827;
+
+    color: var(--text);
+
+    font-size: 1rem;
+
+    transition:
+        border-color var(--transition),
+        box-shadow var(--transition),
+        background var(--transition);
 }
 
+#answerInput::placeholder {
+    color: #64748b;
+}
 
 #answerInput:focus {
-    border-color: #2563eb;
+    border-color: var(--blue);
+
+    background: #151f31;
+
+    box-shadow:
+        0 0 0 3px rgba(59,
+            130,
+            246,
+            .14);
 }
 
+
+/* =========================
+   CHECK BUTTON
+========================= */
+
+#checkButton {
+    padding: 13px 20px;
+
+    border: 0;
+
+    border-radius: 11px;
+
+    background: var(--blue);
+
+    color: white;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background var(--transition),
+        transform var(--transition);
+}
+
+#checkButton:hover {
+    background: var(--blue-dark);
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================
+   FEEDBACK
+========================= */
 
 #feedback {
-    margin-top: 20px;
+    min-height: 26px;
 
-    font-size: 18px;
+    margin-top: 18px;
 
-    font-weight: bold;
+    font-size: .92rem;
+    font-weight: 700;
+
+    text-align: center;
 }
 
 
-#solutionButton {
-    margin-top: 15px;
+/* =========================
+   SOLUTION
+========================= */
 
-    background: #f59e0b;
+.solution-button {
+    display: block;
+
+    margin: 12px auto 0;
+
+    padding: 9px 13px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 9px;
+
+    background: var(--light);
+
+    color: var(--gray-dark);
+
+    font-size: .82rem;
+    font-weight: 650;
+
+    cursor: pointer;
 }
 
-
-#solutionButton:hover {
-    background: #d97706;
+.solution-button:hover {
+    background: #2a3547;
 }
-
 
 .solution {
-    margin-top: 20px;
+    max-width: 700px;
 
-    padding: 20px;
+    margin: 18px auto 0;
 
-    text-align: left;
+    padding: 18px;
 
-    background: #f8f9fa;
+    border: 1px solid var(--border);
 
-    border-radius: 8px;
+    border-radius: 12px;
 
-    border: 1px solid #ddd;
+    background: var(--light);
 
-    font-family: monospace;
+    color: var(--gray-dark);
 
-    white-space: pre-line;
+    font-size: .9rem;
 
     line-height: 1.6;
 }
 
 
-#nextButton {
-    margin-top: 20px;
+/* =========================
+   NEXT BUTTON
+========================= */
 
-    background: #16a34a;
+.next-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    width: 100%;
+    max-width: 620px;
+
+    margin: 22px auto 0;
+
+    padding: 13px 18px;
+
+    border: 0;
+
+    border-radius: 11px;
+
+    background: var(--blue);
+
+    color: white;
+
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.next-button:hover {
+    background: var(--blue-dark);
 }
 
 
-#nextButton:hover {
-    background: #15803d;
+/* =========================
+   RESULT BUTTONS
+========================= */
+
+#resultButtons {
+    display: flex;
+    justify-content: center;
+
+    gap: 10px;
+
+    margin-top: 25px;
+}
+
+#resultButtons button {
+    padding: 11px 16px;
+
+    border-radius: 10px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+#restartButton {
+    border: 0;
+
+    background: var(--blue);
+
+    color: white;
+}
+
+#restartButton:hover {
+    background: var(--blue-dark);
 }
 
 
-/* ==========================================
-   RESPONSIVE
-   ========================================== */
+/* =========================
+   BINARY ADDITION
+========================= */
 
-@media (max-width: 600px) {
+.addition-task-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 20px;
+}
+
+.binary-calculation {
+    display: flex;
+    justify-content: center;
+
+    width: 100%;
+
+    overflow-x: auto;
+
+    padding: 10px 20px 15px;
+}
+
+.binary-addition {
+    --binary-prefix-size: 28px;
+
+    width: max-content;
+}
+
+.binary-row {
+    display: grid;
+
+    grid-template-columns:
+        var(--binary-prefix-size) repeat(var(--binary-columns),
+            var(--binary-cell-size));
+
+    width: max-content;
+}
+
+.binary-prefix {
+    width: var(--binary-prefix-size);
+    height: var(--binary-cell-size);
+}
+
+.binary-cell {
+    width: var(--binary-cell-size);
+    height: var(--binary-cell-size);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-family:
+        "SFMono-Regular",
+        Consolas,
+        "Liberation Mono",
+        monospace;
+
+    font-size: 1.35rem;
+    font-weight: 750;
+}
+
+.binary-carry-row .binary-cell {
+    height: 24px;
+
+    color: var(--muted);
+
+    font-size: .8rem;
+}
+
+.binary-plus {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--text);
+
+    font-size: 1.35rem;
+    font-weight: 800;
+}
+
+.binary-divider {
+    width:
+        calc(var(--binary-columns) * var(--binary-cell-size));
+
+    margin-left: var(--binary-prefix-size);
+
+    margin-top: 6px;
+    margin-bottom: 5px;
+
+    border-top: 2px solid #475569;
+}
+
+.binary-result .binary-cell {
+    color: #60a5fa;
+}
+
+
+/* =========================
+   HIDDEN
+========================= */
+
+.hidden {
+    display: none !important;
+}
+
+
+/* =========================
+   TABLET / MOBILE
+========================= */
+
+@media (max-width: 720px) {
 
     .container {
-        padding: 22px;
+        width:
+            min(calc(100% - 24px),
+                600px);
+
+        padding-top: 45px;
     }
 
+    .header {
+        margin-bottom: 36px;
+    }
+
+    .header-icon {
+        width: 46px;
+        height: 46px;
+    }
+
+    .header-icon .material-symbols-outlined {
+        font-size: 27px;
+    }
 
     .mode-grid {
         grid-template-columns: 1fr;
     }
 
-
-    .mode-button.mixed {
-        grid-column: auto;
+    .task-card {
+        padding: 24px 18px;
     }
 
+    .top-bar {
+        align-items: flex-start;
+    }
+
+
+    /* Conversion Task */
+
+    .conversion-task {
+        gap: 10px;
+    }
+
+    .number-box {
+        width: 42%;
+
+        min-height: 110px;
+
+        padding: 15px 10px;
+    }
+
+    .number-box-value {
+        font-size: 1.7rem;
+    }
+
+    .number-box-label {
+        font-size: .65rem;
+    }
+
+    .conversion-arrow {
+        width: 32px;
+        height: 32px;
+
+        font-size: 1.1rem;
+    }
+
+
+    /* Answer */
 
     .answer-area {
         flex-direction: column;
     }
 
-
-    #answerInput {
+    #checkButton {
         width: 100%;
     }
 
 
-    #task {
-        font-size: 25px;
-    }
-
-}
-
-/* ==========================================
-   ERGEBNIS-BUTTONS
-   ========================================== */
-
-#resultButtons {
-    display: flex;
-
-    justify-content: center;
-
-    gap: 12px;
-
-    margin-top: 25px;
-}
-
-
-#resultButtons button {
-    background: #2563eb;
-}
-
-
-#resultButtons button:hover {
-    background: #1d4ed8;
-}
-
-
-#menuButton {
-    background: #6b7280 !important;
-}
-
-
-#menuButton:hover {
-    background: #4b5563 !important;
-}
-
-
-@media (max-width: 600px) {
+    /* Result */
 
     #resultButtons {
         flex-direction: column;
     }
 
+    #resultButtons button {
+        width: 100%;
+    }
+}
+
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media (max-width: 430px) {
+
+    .header {
+        align-items: flex-start;
+    }
+
+    .header h1 {
+        font-size: 1.55rem;
+    }
+
+    .header p {
+        font-size: .86rem;
+    }
+
+    .task-header {
+        margin-bottom: 20px;
+    }
+
+
+    /* Conversion Task */
+
+    .conversion-task {
+        gap: 7px;
+    }
+
+    .number-box {
+        width: 43%;
+
+        min-height: 100px;
+    }
+
+    .number-box-value {
+        font-size: 1.45rem;
+    }
+
+    .conversion-arrow {
+        width: 28px;
+        height: 28px;
+
+        font-size: 1rem;
+    }
+
+
+    .mode-main {
+        gap: 7px;
+    }
+
+    .mode-arrow {
+        width: 23px;
+        height: 23px;
+
+        font-size: .95rem;
+    }
 }

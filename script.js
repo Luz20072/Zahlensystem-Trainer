@@ -105,6 +105,12 @@ const modes = {
         name: "Hexadezimal → Binär",
         from: "hex",
         to: "binary"
+    },
+
+    "number-addition": {
+        name: "Zahlensysteme addieren",
+        from: "addition",
+        to: "addition"
     }
 
 };
@@ -128,7 +134,6 @@ document
                 startTraining();
 
             }
-
         );
 
     });
@@ -174,8 +179,9 @@ function generateTasks() {
             currentMode;
 
 
-        // Bei gemischten Aufgaben
-        // zufälligen Modus auswählen
+        // ======================================
+        // GEMISCHTE AUFGABEN
+        // ======================================
 
         if (modeKey === "mixed") {
 
@@ -190,6 +196,32 @@ function generateTasks() {
                     availableModes.length
                 )
                 ];
+
+        }
+
+
+        // ======================================
+        // ZAHLENSYSTEME ADDIEREN
+        // ======================================
+
+        if (modeKey === "number-addition") {
+
+            const task =
+                generateNumberAdditionTask(
+                    usedTasks
+                );
+
+
+            if (!task) {
+
+                continue;
+
+            }
+
+
+            tasks.push(task);
+
+            continue;
 
         }
 
@@ -236,13 +268,9 @@ function generateTasks() {
             );
 
 
-        // Aufgabe eindeutig identifizieren
-
         const taskId =
             `${modeKey}-${decimalNumber}`;
 
-
-        // Keine identische Aufgabe doppelt
 
         if (usedTasks.has(taskId)) {
 
@@ -272,6 +300,118 @@ function generateTasks() {
 
 
 // ==========================================
+// ZAHLENSYSTEM-ADDITION ERZEUGEN
+// ==========================================
+
+function generateNumberAdditionTask(
+    usedTasks
+) {
+
+    const formats = [
+        "binary",
+        "decimal",
+        "hex"
+    ];
+
+
+    const firstFormat =
+        formats[
+        Math.floor(
+            Math.random() *
+            formats.length
+        )
+        ];
+
+
+    const secondFormat =
+        formats[
+        Math.floor(
+            Math.random() *
+            formats.length
+        )
+        ];
+
+
+    const resultFormat =
+        formats[
+        Math.floor(
+            Math.random() *
+            formats.length
+        )
+        ];
+
+
+    const firstDecimal =
+        Math.floor(
+            Math.random() * 246
+        ) + 10;
+
+
+    const secondDecimal =
+        Math.floor(
+            Math.random() * 246
+        ) + 10;
+
+
+    const sum =
+        firstDecimal +
+        secondDecimal;
+
+
+    const taskId =
+        `addition-${firstDecimal}-${secondDecimal}-${firstFormat}-${secondFormat}-${resultFormat}`;
+
+
+    if (usedTasks.has(taskId)) {
+
+        return null;
+
+    }
+
+
+    usedTasks.add(taskId);
+
+
+    return {
+
+        mode: "number-addition",
+
+        firstDecimal: firstDecimal,
+
+        secondDecimal: secondDecimal,
+
+        firstFormat: firstFormat,
+
+        secondFormat: secondFormat,
+
+        resultFormat: resultFormat,
+
+        firstValue:
+            formatValue(
+                firstDecimal,
+                firstFormat
+            ),
+
+        secondValue:
+            formatValue(
+                secondDecimal,
+                secondFormat
+            ),
+
+        sumDecimal: sum,
+
+        answer:
+            formatValue(
+                sum,
+                resultFormat
+            )
+
+    };
+
+}
+
+
+// ==========================================
 // AUFGABE ANZEIGEN
 // ==========================================
 
@@ -292,15 +432,110 @@ function showTask() {
         mode.name;
 
 
-    taskElement.textContent =
-        formatNumber(
+    // ======================================
+    // ZAHLENSYSTEM-ADDITION
+    // ======================================
+
+    if (
+        currentTask.mode === "number-addition"
+    ) {
+
+        taskElement.innerHTML = `
+
+            <div class="addition-task-display">
+
+                <div>
+                    ${formatNumber(
+            currentTask.firstValue,
+            currentTask.firstFormat
+        )}
+                </div>
+
+                <div class="addition-operator">
+                    +
+                </div>
+
+                <div>
+                    ${formatNumber(
+            currentTask.secondValue,
+            currentTask.secondFormat
+        )}
+                </div>
+
+                <div class="addition-equals">
+                    =
+                </div>
+
+                <div class="addition-question">
+                    ${formatNumber(
+            "?",
+            currentTask.resultFormat
+        )}
+                </div>
+
+            </div>
+
+        `;
+
+    }
+
+    // ======================================
+    // NORMALE UMRECHNUNG
+    // ======================================
+
+    else {
+
+        taskElement.innerHTML = `
+
+            <div class="conversion-task">
+
+                <div class="number-box source-box">
+
+                    <div class="number-box-label">
+                        ${getFormatName(mode.from)}
+                    </div>
+
+                    <div class="number-box-value">
+                        ${formatNumber(
             currentTask.input,
             mode.from
-        ) + " → ?";
+        )}
+                    </div>
+
+                </div>
 
 
-    scoreElement.textContent =
-        `Aufgabe ${currentTaskIndex + 1} / 10 | Richtig: ${correctAnswers}`;
+                <div class="conversion-arrow">
+                    →
+                </div>
+
+
+                <div class="number-box target-box">
+
+                    <div class="number-box-label">
+                        ${getFormatName(mode.to)}
+                    </div>
+
+                    <div class="number-box-value question">
+                        ${formatNumber(
+            "?",
+            mode.to
+        )}
+                    </div>
+
+                </div>
+
+            </div>
+
+        `;
+
+    }
+
+
+    scoreElement.innerHTML =
+        `Aufgabe ${currentTaskIndex + 1} / 10
+        <span class="score-divider">•</span>
+        Richtig: ${correctAnswers}`;
 
 }
 
@@ -325,10 +560,101 @@ function generateRandomNumber() {
 
 
 // ==========================================
+// ZAHL IN FORMAT UMWANDELN
+// ==========================================
+
+function formatValue(
+    decimal,
+    type
+) {
+
+    if (type === "decimal") {
+
+        return decimal.toString();
+
+    }
+
+
+    if (type === "binary") {
+
+        return decimal.toString(2);
+
+    }
+
+
+    if (type === "hex") {
+
+        return decimal
+            .toString(16)
+            .toUpperCase();
+
+    }
+
+}
+
+
+// ==========================================
+// BASIS ANZEIGEN
+// ==========================================
+
+function getBaseSymbol(type) {
+
+    if (type === "binary") {
+
+        return "B";
+
+    }
+
+
+    if (type === "decimal") {
+
+        return "D";
+
+    }
+
+
+    if (type === "hex") {
+
+        return "H";
+
+    }
+
+}
+
+
+// ==========================================
+// BASISKENNUNG FORMATIEREN
+// ==========================================
+
+function formatBase(type) {
+
+    return `<span class="base">${getBaseSymbol(type)}</span>`;
+
+}
+
+
+// ==========================================
+// ZAHL MIT BASISKENNUNG
+// ==========================================
+
+function formatNumber(
+    value,
+    type
+) {
+
+    return `${value}${formatBase(type)}`;
+
+}
+
+
+// ==========================================
 // UMRECHNUNGEN
 // ==========================================
 
-function convert(decimal, target) {
+function convert(
+    decimal,
+    target
+) {
 
     if (target === "decimal") {
 
@@ -406,11 +732,13 @@ function checkAnswer() {
         );
 
 
-    // ======================================
-    // FÜHRENDE BINÄRNULLEN IGNORIEREN
-    // ======================================
+    const binaryAnswer =
+        currentTask.mode === "number-addition"
+            ? currentTask.resultFormat === "binary"
+            : mode.to === "binary";
 
-    if (mode.to === "binary") {
+
+    if (binaryAnswer) {
 
         userAnswer =
             userAnswer.replace(
@@ -472,7 +800,12 @@ function checkAnswer() {
     else {
 
         feedback.textContent =
-            `Leider falsch. Richtige Antwort: ${currentTask.answer}`;
+            `Leider falsch. Richtige Antwort: ${formatNumber(
+                currentTask.answer,
+                currentTask.mode === "number-addition"
+                    ? currentTask.resultFormat
+                    : mode.to
+            )}`;
 
 
         feedback.style.color =
@@ -554,8 +887,10 @@ solutionButton.addEventListener(
     "click",
     () => {
 
-        solutionElement.textContent =
-            createSolution(currentTask);
+        solutionElement.innerHTML =
+            createSolution(
+                currentTask
+            );
 
 
         solutionElement.classList.remove(
@@ -572,10 +907,21 @@ solutionButton.addEventListener(
 
 
 // ==========================================
-// LÖSUNGSWEG ERSTELLEN
+// LÖSUNGSWEG
 // ==========================================
 
 function createSolution(task) {
+
+    if (
+        task.mode === "number-addition"
+    ) {
+
+        return createNumberAdditionSolution(
+            task
+        );
+
+    }
+
 
     const mode =
         modes[task.mode];
@@ -621,15 +967,61 @@ function createSolution(task) {
         }
 
 
-        return (
-            `${number}₁₀\n\n` +
+        return `
 
-            lines.join("\n") +
+            <div class="solution-title">
+                Dezimal → Binär
+            </div>
 
-            `\n\nReste von unten nach oben:\n\n` +
+            <div class="solution-section">
 
-            `${task.answer}₂`
-        );
+                <strong>
+                    Ausgangszahl
+                </strong>
+
+                <div class="solution-formula">
+                    ${formatNumber(
+            number,
+            "decimal"
+        )}
+                </div>
+
+            </div>
+
+            <div class="solution-section">
+
+                <strong>
+                    Schrittweise teilen
+                </strong>
+
+                <div class="solution-list">
+
+                    ${lines.map(
+            line => `
+                            <div>${line}</div>
+                        `
+        ).join("")}
+
+                </div>
+
+            </div>
+
+            <div class="solution-result">
+
+                <span>
+                    Reste von unten nach oben:
+                </span>
+
+                <strong>
+                    ${formatNumber(
+            task.answer,
+            "binary"
+        )}
+                </strong>
+
+            </div>
+
+        `;
 
     }
 
@@ -663,7 +1055,9 @@ function createSolution(task) {
 
 
             const bit =
-                Number(binary[i]);
+                Number(
+                    binary[i]
+                );
 
 
             const value =
@@ -688,21 +1082,65 @@ function createSolution(task) {
         }
 
 
-        return (
-            `${binary}₂\n\n` +
+        return `
 
-            `= ${parts.join(" + ")}\n\n` +
+            <div class="solution-title">
+                Binär → Dezimal
+            </div>
 
-            `= ${values.join(" + ")}\n\n` +
+            <div class="solution-section">
 
-            `= ${task.answer}₁₀`
-        );
+                <strong>
+                    Stellenwerte einsetzen
+                </strong>
+
+                <div class="solution-formula">
+                    ${formatNumber(
+            binary,
+            "binary"
+        )}
+                </div>
+
+                <div class="solution-formula">
+                    = ${parts.join(" + ")}
+                </div>
+
+            </div>
+
+            <div class="solution-section">
+
+                <strong>
+                    Berechnen
+                </strong>
+
+                <div class="solution-formula">
+                    = ${values.join(" + ")}
+                </div>
+
+            </div>
+
+            <div class="solution-result">
+
+                <span>
+                    Ergebnis:
+                </span>
+
+                <strong>
+                    ${formatNumber(
+            task.answer,
+            "decimal"
+        )}
+                </strong>
+
+            </div>
+
+        `;
 
     }
 
 
     // ======================================
-    // DEZIMAL → HEXADEZIMAL
+    // DEZIMAL → HEX
     // ======================================
 
     if (
@@ -743,21 +1181,67 @@ function createSolution(task) {
         }
 
 
-        return (
-            `${number}₁₀\n\n` +
+        return `
 
-            lines.join("\n") +
+            <div class="solution-title">
+                Dezimal → Hexadezimal
+            </div>
 
-            `\n\nReste von unten nach oben:\n\n` +
+            <div class="solution-section">
 
-            `${task.answer}₁₆`
-        );
+                <strong>
+                    Ausgangszahl
+                </strong>
+
+                <div class="solution-formula">
+                    ${formatNumber(
+            number,
+            "decimal"
+        )}
+                </div>
+
+            </div>
+
+            <div class="solution-section">
+
+                <strong>
+                    Schrittweise teilen
+                </strong>
+
+                <div class="solution-list">
+
+                    ${lines.map(
+            line => `
+                            <div>${line}</div>
+                        `
+        ).join("")}
+
+                </div>
+
+            </div>
+
+            <div class="solution-result">
+
+                <span>
+                    Reste von unten nach oben:
+                </span>
+
+                <strong>
+                    ${formatNumber(
+            task.answer,
+            "hex"
+        )}
+                </strong>
+
+            </div>
+
+        `;
 
     }
 
 
     // ======================================
-    // HEXADEZIMAL → DEZIMAL
+    // HEX → DEZIMAL
     // ======================================
 
     if (
@@ -795,7 +1279,7 @@ function createSolution(task) {
                 hex.length - 1 - i;
 
 
-            const result =
+            const calculation =
                 value *
                 Math.pow(
                     16,
@@ -808,30 +1292,74 @@ function createSolution(task) {
             );
 
 
-            if (result > 0) {
+            if (calculation > 0) {
 
-                values.push(result);
+                values.push(calculation);
 
             }
 
         }
 
 
-        return (
-            `${hex}₁₆\n\n` +
+        return `
 
-            `= ${parts.join(" + ")}\n\n` +
+            <div class="solution-title">
+                Hexadezimal → Dezimal
+            </div>
 
-            `= ${values.join(" + ")}\n\n` +
+            <div class="solution-section">
 
-            `= ${task.answer}₁₀`
-        );
+                <strong>
+                    Stellenwerte einsetzen
+                </strong>
+
+                <div class="solution-formula">
+                    ${formatNumber(
+            hex,
+            "hex"
+        )}
+                </div>
+
+                <div class="solution-formula">
+                    = ${parts.join(" + ")}
+                </div>
+
+            </div>
+
+            <div class="solution-section">
+
+                <strong>
+                    Berechnen
+                </strong>
+
+                <div class="solution-formula">
+                    = ${values.join(" + ")}
+                </div>
+
+            </div>
+
+            <div class="solution-result">
+
+                <span>
+                    Ergebnis:
+                </span>
+
+                <strong>
+                    ${formatNumber(
+            task.answer,
+            "decimal"
+        )}
+                </strong>
+
+            </div>
+
+        `;
 
     }
 
 
     // ======================================
-    // BINÄR → HEXADEZIMAL
+    // BINÄR → HEX
     // ======================================
 
     if (
@@ -869,32 +1397,79 @@ function createSolution(task) {
                         );
 
 
-                    return (
-                        `${group} = ` +
-                        `${value.toString(16).toUpperCase()}`
-                    );
+                    const hexValue =
+                        value
+                            .toString(16)
+                            .toUpperCase();
+
+
+                    return `
+
+                        <div>
+                            ${formatNumber(
+                        group,
+                        "binary"
+                    )}
+                            =
+                            ${formatNumber(
+                        value,
+                        "decimal"
+                    )}
+                            =
+                            ${formatNumber(
+                        hexValue,
+                        "hex"
+                    )}
+                        </div>
+
+                    `;
 
                 }
             );
 
 
-        return (
-            `${binary}₂\n\n` +
+        return `
 
-            `In Vierergruppen aufteilen:\n\n` +
+            <div class="solution-title">
+                Binär → Hexadezimal
+            </div>
 
-            conversions.join("\n") +
+            <div class="solution-section">
 
-            `\n\nErgebnis:\n\n` +
+                <strong>
+                    In Vierergruppen aufteilen
+                </strong>
 
-            `${task.answer}₁₆`
-        );
+                <div class="solution-list">
+
+                    ${conversions.join("")}
+
+                </div>
+
+            </div>
+
+            <div class="solution-result">
+
+                <span>
+                    Ergebnis:
+                </span>
+
+                <strong>
+                    ${formatNumber(
+            task.answer,
+            "hex"
+        )}
+                </strong>
+
+            </div>
+
+        `;
 
     }
 
 
     // ======================================
-    // HEXADEZIMAL → BINÄR
+    // HEX → BINÄR
     // ======================================
 
     if (
@@ -922,25 +1497,62 @@ function createSolution(task) {
                             );
 
 
-                    return (
-                        `${digit} = ${binary}`
-                    );
+                    return `
+
+                        <div>
+                            ${formatNumber(
+                        digit,
+                        "hex"
+                    )}
+                            =
+                            ${formatNumber(
+                        binary,
+                        "binary"
+                    )}
+                        </div>
+
+                    `;
 
                 }
             );
 
 
-        return (
-            `${hex}₁₆\n\n` +
+        return `
 
-            `Jede Hexadezimalstelle entspricht vier Bits:\n\n` +
+            <div class="solution-title">
+                Hexadezimal → Binär
+            </div>
 
-            conversions.join("\n") +
+            <div class="solution-section">
 
-            `\n\nErgebnis:\n\n` +
+                <strong>
+                    Jede Hexadezimalstelle entspricht vier Bits
+                </strong>
 
-            `${task.answer}₂`
-        );
+                <div class="solution-list">
+
+                    ${conversions.join("")}
+
+                </div>
+
+            </div>
+
+            <div class="solution-result">
+
+                <span>
+                    Ergebnis:
+                </span>
+
+                <strong>
+                    ${formatNumber(
+            task.answer,
+            "binary"
+        )}
+                </strong>
+
+            </div>
+
+        `;
 
     }
 
@@ -948,28 +1560,632 @@ function createSolution(task) {
 
 
 // ==========================================
-// ZAHLEN FORMATIEREN
+// ZAHLENSYSTEM-ADDITION – LÖSUNGSWEG
 // ==========================================
 
-function formatNumber(value, type) {
+function createNumberAdditionSolution(task) {
 
-    if (type === "decimal") {
+    const firstBinary =
+        task.firstDecimal.toString(2);
 
-        return `${value}₁₀`;
+
+    const secondBinary =
+        task.secondDecimal.toString(2);
+
+
+    const binaryResult =
+        task.sumDecimal.toString(2);
+
+
+    const firstOriginal =
+        formatNumber(
+            task.firstValue,
+            task.firstFormat
+        );
+
+
+    const secondOriginal =
+        formatNumber(
+            task.secondValue,
+            task.secondFormat
+        );
+
+
+    let html = `
+
+        <div class="solution-title">
+            Zahlensysteme addieren
+        </div>
+
+        <div class="solution-section">
+
+            <strong>
+                1. Ausgangszahlen
+            </strong>
+
+            <div class="solution-formula">
+                ${firstOriginal}
+                +
+                ${secondOriginal}
+            </div>
+
+        </div>
+
+    `;
+
+
+    // ======================================
+    // ERSTE ZAHL → BINÄR
+    // ======================================
+
+    if (
+        task.firstFormat !== "binary"
+    ) {
+
+        html += `
+
+            <div class="solution-section">
+
+                <strong>
+                    ${firstOriginal} in Binär umwandeln
+                </strong>
+
+                <div class="solution-formula">
+                    ${firstOriginal}
+                    =
+                    ${formatNumber(
+            firstBinary,
+            "binary"
+        )}
+                </div>
+
+            </div>
+
+        `;
 
     }
 
 
+    // ======================================
+    // ZWEITE ZAHL → BINÄR
+    // ======================================
+
+    if (
+        task.secondFormat !== "binary"
+    ) {
+
+        html += `
+
+            <div class="solution-section">
+
+                <strong>
+                    ${secondOriginal} in Binär umwandeln
+                </strong>
+
+                <div class="solution-formula">
+                    ${secondOriginal}
+                    =
+                    ${formatNumber(
+            secondBinary,
+            "binary"
+        )}
+                </div>
+
+            </div>
+
+        `;
+
+    }
+
+
+    // ======================================
+    // BINÄR ADDIEREN
+    // ======================================
+
+    html += `
+
+        <div class="solution-section">
+
+            <strong>
+                2. Binär addieren
+            </strong>
+
+            ${createBinaryCalculation(
+        firstBinary,
+        secondBinary,
+        binaryResult
+    )}
+
+        </div>
+
+    `;
+
+
+    // ======================================
+    // BINÄRES ERGEBNIS
+    // ======================================
+
+    if (
+        task.resultFormat === "binary"
+    ) {
+
+        html += `
+
+            <div class="solution-result">
+
+                <span>
+                    Ergebnis:
+                </span>
+
+                <strong>
+                    ${formatNumber(
+            binaryResult,
+            "binary"
+        )}
+                </strong>
+
+            </div>
+
+        `;
+
+    }
+
+
+    // ======================================
+    // DEZIMALES ERGEBNIS
+    // ======================================
+
+    else if (
+        task.resultFormat === "decimal"
+    ) {
+
+        const decimalParts = [];
+
+        const decimalValues = [];
+
+
+        for (
+            let i = 0;
+            i < binaryResult.length;
+            i++
+        ) {
+
+            const bit =
+                Number(
+                    binaryResult[i]
+                );
+
+
+            const exponent =
+                binaryResult.length - 1 - i;
+
+
+            const value =
+                bit *
+                Math.pow(
+                    2,
+                    exponent
+                );
+
+
+            decimalParts.push(
+                `${bit} · 2^${exponent}`
+            );
+
+
+            if (value > 0) {
+
+                decimalValues.push(value);
+
+            }
+
+        }
+
+
+        html += `
+
+            <div class="solution-section">
+
+                <strong>
+                    3. Binäres Ergebnis in Dezimal umwandeln
+                </strong>
+
+                <div class="solution-formula">
+                    ${formatNumber(
+            binaryResult,
+            "binary"
+        )}
+                </div>
+
+                <div class="solution-formula">
+                    = ${decimalParts.join(" + ")}
+                </div>
+
+                <div class="solution-formula">
+                    = ${decimalValues.join(" + ")}
+                </div>
+
+                <div class="solution-formula">
+                    =
+                    ${formatNumber(
+            task.sumDecimal,
+            "decimal"
+        )}
+                </div>
+
+            </div>
+
+            <div class="solution-result">
+
+                <span>
+                    Ergebnis:
+                </span>
+
+                <strong>
+                    ${formatNumber(
+            task.sumDecimal,
+            "decimal"
+        )}
+                </strong>
+
+            </div>
+
+        `;
+
+    }
+
+
+    // ======================================
+    // HEXADEZIMALES ERGEBNIS
+    // ======================================
+
+    else if (
+        task.resultFormat === "hex"
+    ) {
+
+        const paddedBinary =
+            binaryResult.padStart(
+                Math.ceil(
+                    binaryResult.length / 4
+                ) * 4,
+                "0"
+            );
+
+
+        const groups =
+            paddedBinary.match(
+                /.{4}/g
+            );
+
+
+        const hexConversions =
+            groups.map(
+                group => {
+
+                    const decimalValue =
+                        parseInt(
+                            group,
+                            2
+                        );
+
+
+                    const hexValue =
+                        decimalValue
+                            .toString(16)
+                            .toUpperCase();
+
+
+                    return `
+
+                        <div>
+                            ${formatNumber(
+                        group,
+                        "binary"
+                    )}
+                            =
+                            ${formatNumber(
+                        decimalValue,
+                        "decimal"
+                    )}
+                            =
+                            ${formatNumber(
+                        hexValue,
+                        "hex"
+                    )}
+                        </div>
+
+                    `;
+
+                }
+            );
+
+
+        const resultValue =
+            formatValue(
+                task.sumDecimal,
+                "hex"
+            );
+
+
+        html += `
+
+            <div class="solution-section">
+
+                <strong>
+                    3. Binäres Ergebnis in Hexadezimal umwandeln
+                </strong>
+
+                <div class="solution-formula">
+                    ${formatNumber(
+            binaryResult,
+            "binary"
+        )}
+                </div>
+
+                <div class="solution-formula">
+                    In Vierergruppen aufteilen:
+                </div>
+
+                <div class="solution-list">
+
+                    ${hexConversions.join("")}
+
+                </div>
+
+                <div class="solution-formula">
+                    =
+                    ${formatNumber(
+            resultValue,
+            "hex"
+        )}
+                </div>
+
+            </div>
+
+            <div class="solution-result">
+
+                <span>
+                    Ergebnis:
+                </span>
+
+                <strong>
+                    ${formatNumber(
+            resultValue,
+            "hex"
+        )}
+                </strong>
+
+            </div>
+
+        `;
+
+    }
+
+
+    return html;
+
+}
+
+
+// ==========================================
+// BINÄR-ADDITION DARSTELLEN
+// ==========================================
+
+function createBinaryCalculation(
+    first,
+    second,
+    result
+) {
+
+    const maxLength =
+        Math.max(
+            first.length,
+            second.length
+        );
+
+
+    const displayWidth =
+        maxLength + 1;
+
+
+    const firstPadded =
+        first.padStart(
+            maxLength,
+            "0"
+        );
+
+
+    const secondPadded =
+        second.padStart(
+            maxLength,
+            "0"
+        );
+
+
+    const firstDisplay =
+        firstPadded.padStart(
+            displayWidth,
+            "0"
+        );
+
+
+    const secondDisplay =
+        secondPadded.padStart(
+            displayWidth,
+            "0"
+        );
+
+
+    const resultDisplay =
+        result.padStart(
+            displayWidth,
+            "0"
+        );
+
+
+    // ======================================
+    // ÜBERTRÄGE
+    // ======================================
+
+    const carries =
+        new Array(
+            displayWidth
+        ).fill("");
+
+
+    let carry = 0;
+
+
+    for (
+        let i = maxLength - 1;
+        i >= 0;
+        i--
+    ) {
+
+        const a =
+            Number(
+                firstPadded[i]
+            );
+
+
+        const b =
+            Number(
+                secondPadded[i]
+            );
+
+
+        const sum =
+            a +
+            b +
+            carry;
+
+
+        if (sum >= 2) {
+
+            carries[i] = "1";
+
+            carry = 1;
+
+        }
+
+        else {
+
+            carry = 0;
+
+        }
+
+    }
+
+
+    // ======================================
+    // ZELLEN
+    // ======================================
+
+    function createCells(
+        value,
+        className = ""
+    ) {
+
+        return value
+            .split("")
+            .map(
+                bit => `
+
+                    <span class="binary-cell ${className}">
+                        ${bit}
+                    </span>
+
+                `
+            )
+            .join("");
+
+    }
+
+
+    // ======================================
+    // DARSTELLUNG
+    // ======================================
+
+    return `
+
+        <div
+            class="binary-calculation"
+            style="--binary-columns: ${displayWidth};"
+        >
+
+            <div class="binary-row binary-carry-row">
+
+                ${createCells(
+        carries.join(""),
+        "carry"
+    )}
+
+            </div>
+
+
+            <div class="binary-row binary-number-row">
+
+                ${createCells(
+        firstDisplay
+    )}
+
+            </div>
+
+
+            <div class="binary-row binary-number-row binary-second-row">
+
+                ${createCells(
+        secondDisplay
+    )}
+
+                <span class="binary-plus">
+                    +
+                </span>
+
+            </div>
+
+
+            <div class="binary-divider"></div>
+
+
+            <div class="binary-row binary-number-row binary-result">
+
+                ${createCells(
+        resultDisplay
+    )}
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+// ==========================================
+// FORMATNAME
+// ==========================================
+
+function getFormatName(type) {
+
     if (type === "binary") {
 
-        return `${value}₂`;
+        return "Binär";
+
+    }
+
+
+    if (type === "decimal") {
+
+        return "Dezimal";
 
     }
 
 
     if (type === "hex") {
 
-        return `${value}₁₆`;
+        return "Hexadezimal";
 
     }
 
@@ -982,8 +2198,10 @@ function formatNumber(value, type) {
 
 function updateScore() {
 
-    scoreElement.textContent =
-        `Aufgabe ${currentTaskIndex + 1} / 10 | Richtig: ${correctAnswers}`;
+    scoreElement.innerHTML =
+        `Aufgabe ${currentTaskIndex + 1} / 10
+        <span class="score-divider">•</span>
+        Richtig: ${correctAnswers}`;
 
 }
 
@@ -1062,7 +2280,7 @@ restartButton.addEventListener(
 
 
 // ==========================================
-// ANDEREN ÜBUNGSMODUS WÄHLEN
+// ANDEREN ÜBUNGSMODUS
 // ==========================================
 
 menuButton.addEventListener(
@@ -1108,7 +2326,7 @@ function resetInterface() {
     feedback.textContent = "";
 
 
-    solutionElement.textContent = "";
+    solutionElement.innerHTML = "";
 
     solutionElement.classList.add(
         "hidden"

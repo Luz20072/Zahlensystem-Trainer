@@ -3,10 +3,12 @@
 
 <head>
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Zahlensystem-Trainer</title>
+
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=calculate,add,shuffle&display=block">
 
     <link rel="stylesheet" href="style.css">
 </head>
@@ -15,52 +17,252 @@
 
     <main class="container">
 
-        <header>
-            <h1>Zahlensystem-Trainer</h1>
+        <header class="header">
 
-            <p>
-                Übe die Umrechnung zwischen Binär-, Dezimal-
-                und Hexadezimalzahlen.
-            </p>
+            <div class="header-icon">
+                <span class="material-symbols-outlined">calculate</span>
+            </div>
+
+            <div>
+                <h1>Zahlensystem-Trainer</h1>
+
+                <p>
+                    Übe Binär-, Dezimal- und Hexadezimalzahlen
+                    und lerne, verschiedene Zahlensysteme zu addieren.
+                </p>
+            </div>
+
         </header>
 
 
-        <!-- ==========================================
-             MODUSAUSWAHL
-             ========================================== -->
+        <!-- MENÜ -->
 
         <section id="menu">
 
-            <h2>Übungsmodus</h2>
+            <div class="section-heading">
+
+                <span class="section-label">TRAINING</span>
+
+                <h2>Übungsmodus wählen</h2>
+
+                <p>
+                    Wähle eine Aufgabe und starte direkt mit dem Training.
+                </p>
+
+            </div>
+
 
             <div class="mode-grid">
 
+                <!-- Dezimal → Binär -->
+
                 <button class="mode-button" data-mode="decimal-binary">
-                    Dezimal → Binär
+
+                    <span class="mode-main">
+
+                        <span class="mode-system">
+                            Dezimal
+                        </span>
+
+                        <span class="mode-arrow">
+                            →
+                        </span>
+
+                        <span class="mode-system">
+                            Binär
+                        </span>
+
+                    </span>
+
+                    <span class="mode-description">
+                        Basis 10 → Basis 2
+                    </span>
+
                 </button>
+
+
+                <!-- Binär → Dezimal -->
 
                 <button class="mode-button" data-mode="binary-decimal">
-                    Binär → Dezimal
+
+                    <span class="mode-main">
+
+                        <span class="mode-system">
+                            Binär
+                        </span>
+
+                        <span class="mode-arrow">
+                            →
+                        </span>
+
+                        <span class="mode-system">
+                            Dezimal
+                        </span>
+
+                    </span>
+
+                    <span class="mode-description">
+                        Basis 2 → Basis 10
+                    </span>
+
                 </button>
+
+
+                <!-- Dezimal → Hexadezimal -->
 
                 <button class="mode-button" data-mode="decimal-hex">
-                    Dezimal → Hexadezimal
+
+                    <span class="mode-main">
+
+                        <span class="mode-system">
+                            Dezimal
+                        </span>
+
+                        <span class="mode-arrow">
+                            →
+                        </span>
+
+                        <span class="mode-system">
+                            Hexadezimal
+                        </span>
+
+                    </span>
+
+                    <span class="mode-description">
+                        Basis 10 → Basis 16
+                    </span>
+
                 </button>
+
+
+                <!-- Hexadezimal → Dezimal -->
 
                 <button class="mode-button" data-mode="hex-decimal">
-                    Hexadezimal → Dezimal
+
+                    <span class="mode-main">
+
+                        <span class="mode-system">
+                            Hexadezimal
+                        </span>
+
+                        <span class="mode-arrow">
+                            →
+                        </span>
+
+                        <span class="mode-system">
+                            Dezimal
+                        </span>
+
+                    </span>
+
+                    <span class="mode-description">
+                        Basis 16 → Basis 10
+                    </span>
+
                 </button>
+
+
+                <!-- Binär → Hexadezimal -->
 
                 <button class="mode-button" data-mode="binary-hex">
-                    Binär → Hexadezimal
+
+                    <span class="mode-main">
+
+                        <span class="mode-system">
+                            Binär
+                        </span>
+
+                        <span class="mode-arrow">
+                            →
+                        </span>
+
+                        <span class="mode-system">
+                            Hexadezimal
+                        </span>
+
+                    </span>
+
+                    <span class="mode-description">
+                        Basis 2 → Basis 16
+                    </span>
+
                 </button>
+
+
+                <!-- Hexadezimal → Binär -->
 
                 <button class="mode-button" data-mode="hex-binary">
-                    Hexadezimal → Binär
+
+                    <span class="mode-main">
+
+                        <span class="mode-system">
+                            Hexadezimal
+                        </span>
+
+                        <span class="mode-arrow">
+                            →
+                        </span>
+
+                        <span class="mode-system">
+                            Binär
+                        </span>
+
+                    </span>
+
+                    <span class="mode-description">
+                        Basis 16 → Basis 2
+                    </span>
+
                 </button>
 
-                <button class="mode-button mixed" data-mode="mixed">
-                    Gemischte Aufgaben
+
+                <!-- Addition -->
+
+                <button class="mode-button mode-addition" data-mode="number-addition">
+
+                    <span class="mode-icon">
+                        <span class="material-symbols-outlined">
+                            add
+                        </span>
+                    </span>
+
+                    <span class="mode-content">
+
+                        <span class="mode-main">
+                            Zahlensysteme addieren
+                        </span>
+
+                        <span class="mode-description">
+                            Zahlen verschiedener Basen zusammenrechnen
+                        </span>
+
+                    </span>
+
+                </button>
+
+
+                <!-- Gemischt -->
+
+                <button class="mode-button mode-mixed" data-mode="mixed">
+
+                    <span class="mode-icon">
+                        <span class="material-symbols-outlined">
+                            shuffle
+                        </span>
+                    </span>
+
+                    <span class="mode-content">
+
+                        <span class="mode-main">
+                            Gemischte Aufgaben
+                        </span>
+
+                        <span class="mode-description">
+                            Alle Übungsarten kombiniert
+                        </span>
+
+                    </span>
+
                 </button>
 
             </div>
@@ -68,35 +270,76 @@
         </section>
 
 
-        <!-- ==========================================
-             TRAINING
-             ========================================== -->
+        <!-- TRAINING -->
 
         <section id="training" class="hidden">
 
             <div class="top-bar">
 
-                <button id="backButton">
-                    ← Zurück
+                <button id="backButton" class="secondary-button">
+                    <span>←</span>
+                    Zurück
                 </button>
 
-                <span id="score">
-                    Aufgabe 1 / 10 | Richtig: 0
-                </span>
+                <div id="score">
+                    Aufgabe 1 / 10
+                    <span class="score-divider">•</span>
+                    Richtig: 0
+                </div>
 
             </div>
 
 
             <div class="task-card">
 
-                <span id="taskType">
-                    Dezimal → Binär
-                </span>
+                <div class="task-header">
+
+                    <span id="taskType">
+                        Dezimal → Binär
+                    </span>
+
+                    <span class="task-number">
+                        Aufgabe
+                    </span>
+
+                </div>
 
 
-                <h2 id="task">
-                    123₁₀ → ?
-                </h2>
+                <div id="task">
+
+                    <div class="conversion-task">
+
+                        <div class="number-box source-box">
+
+                            <div class="number-box-label">
+                                Dezimal
+                            </div>
+
+                            <div class="number-box-value">
+                                123<span class="base">D</span>
+                            </div>
+
+                        </div>
+
+                        <div class="conversion-arrow">
+                            →
+                        </div>
+
+                        <div class="number-box target-box">
+
+                            <div class="number-box-label">
+                                Binär
+                            </div>
+
+                            <div class="number-box-value question">
+                                ?<span class="base">B</span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
 
 
                 <div class="answer-area">
@@ -114,7 +357,7 @@
                 <div id="feedback"></div>
 
 
-                <button id="solutionButton" class="hidden">
+                <button id="solutionButton" class="hidden solution-button">
                     Lösungsweg anzeigen
                 </button>
 
@@ -122,23 +365,20 @@
                 <div id="solution" class="solution hidden"></div>
 
 
-                <button id="nextButton" class="hidden">
+                <button id="nextButton" class="hidden next-button">
                     Nächste Aufgabe
+                    <span>→</span>
                 </button>
 
-
-                <!-- ======================================
-                     ERGEBNIS-BUTTONS
-                     ====================================== -->
 
                 <div id="resultButtons" class="hidden">
 
                     <button id="restartButton">
-                        Nochmal 10 Aufgaben
+                        ↻ Nochmal 10 Aufgaben
                     </button>
 
-                    <button id="menuButton">
-                        Anderen Übungsmodus wählen
+                    <button id="menuButton" class="secondary-button">
+                        Übungsmodus wechseln
                     </button>
 
                 </div>
